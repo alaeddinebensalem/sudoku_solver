@@ -1,2 +1,14 @@
-# sudoku_solver
-A Python Sudoku solver implementing backtracking with bitmask-based constraint propagation and a most-constrained cell heuristic for optimized search.
+# High-Performance Sudoku Solver
+
+**Author:** Alaeddine Ben Salem | **Email:** alaeddbemsale@gmail.com  
+**GitHub:** [github.com/alaeddinebensalem](https://github.com/alaeddinebensalem)
+
+## Description
+A Python Sudoku solver implementing **backtracking** with **bitmask-based constraint propagation** and a **most-constrained cell search heuristic** for optimized search.
+
+## How to Run
+
+1. Clone the repository.
+2. Import `backtrack_iterative_solver` or `backtrack_recursive_solver` from `src.sudoku_solver`.
+3. Run the solver on a puzzle.  
+   **Puzzle format:** flat list with length 81, with `0` representing empty cells.
