@@ -26,6 +26,7 @@ class ConstraintMap:
         """
         self._cmap = [0] * SUDOKU_SIZE  # the internal constraints map
         self._empty_cells = set()  # the set of empty cells within the puzzle
+        self._hidden_single_idx = -1 # index of a found hidden single
         self._neighbors = NEIGHBOR_MAP
         if puzzle:
             self.update_constraint_map(puzzle)
@@ -47,8 +48,14 @@ class ConstraintMap:
         Returns the index of a cell with 8 constrained digits immediately
         (only one candidate left). Returns -1 if no empty cells remain.
         """
+        if self._hidden_single_idx != -1:
+            result = self._hidden_single_idx
+            self._hidden_single_idx = -1
+            return result
+
         max_digits = 0
         max_index = -1
+
         for i in self._empty_cells:
             num_digits = self._cmap[i] & COUNT_OF_DIGITS
             if num_digits == SUDOKU_LENGTH - 1:
@@ -111,6 +118,10 @@ class ConstraintMap:
         mask += 1 << (DIGIT_MASK * (val - 1) + DIGIT_SHIFT)
         if dig_mask == 1:
             mask += 1
+
+        # check if a neighbor is a hidden single
+        if mask & COUNT_OF_DIGITS == SUDOKU_LENGTH - 1:
+            self._hidden_single_idx = idx
         self._cmap[idx] = mask
 
     def _remove_constraint_neighbor(self, idx: int, val: int):
